@@ -1,0 +1,82 @@
+version: '2.2'
+services:
+    airflow-webserver:
+        user: "1000:0"
+        image: airflow-dbt-ge
+        depends_on:
+            - postgres
+        ports:
+            - 8080:8080
+        networks:
+            - airflow
+        volumes:
+            - ./dags:/opt/airflow/dags
+            - ./dbt:/opt/airflow/dbt
+            - ./logs:/opt/airflow/logs
+        environment:
+            AIRFLOW__CORE__EXECUTOR: LocalExecutor
+            _AIRFLOW_WWW_USER_CREATE: 'true'
+            _AIRFLOW_WWW_USER_USERNAME: 'airflow'
+            _AIRFLOW_WWW_USER_PASSWORD: 'airflow'
+            _AIRFLOW_DB_UPGRADE: 'true'
+            _AIRFLOW_WWW_USER_CREATE: 'true'
+            AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:yey123456@postgres/airflow_db
+            FERNET_KEY: NXtEyKwp633TUtAgdyoEonj9ufHRI7I33s3wjw3q0yU=
+            AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "True"
+            AIRFLOW__CORE__PARALLELISM: 5
+            AIRFLOW__WEBSERVER__WORKERS: 1
+            AIRFLOW__SCHEDULER__MAX_THREADS: 4
+        command: webserver
+        healthcheck:
+            test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+            interval: 10s 
+            timeout: 10s 
+            retries: 5
+
+    airflow-scheduler:
+        user: "1000:0"
+        image: airflow-dbt-ge
+        depends_on: 
+            - postgres
+        networks:
+            - airflow
+        volumes:
+            - ./dags:/opt/airflow/dags
+            - ./dbt:/opt/airflow/dbt
+            - ./logs:/opt/airflow/logs
+        environment:
+            AIRFLOW__CORE__EXECUTOR: LocalExecutor
+            _AIRFLOW_WWW_USER_CREATE: 'true'
+            _AIRFLOW_WWW_USER_USERNAME: 'airflow'
+            _AIRFLOW_WWW_USER_PASSWORD: 'airflow'
+            AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:yey123456@postgres/airflow_db
+            FERNET_KEY: NXtEyKwp633TUtAgdyoEonj9ufHRI7I33s3wjw3q0yU=
+            AIRFLOW_RUN_INITSCRIPTS: "True"
+            AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "True"
+            AIRFLOW__CORE__PARALLELISM: 5
+            AIRFLOW__WEBSERVER__WORKERS: 1
+            AIRFLOW__SCHEDULER__MAX_THREADS: 4
+        command: scheduler
+        restart: always
+
+    postgres:
+        image: postgres:10
+        ports:
+            - 5432
+        networks:
+            - airflow
+        environment:
+            POSTGRES_USER: airflow
+            POSTGRES_PASSWORD: yey123456
+            POSTGRES_DB: airflow_db
+
+    spark-thrift-server:
+       image: spark-thrift-server-dbt-ge
+       ports:
+           - 10000:10000
+           - 4040:4040
+       networks:
+           - airflow
+
+networks:
+    airflow:
