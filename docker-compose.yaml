@@ -13,6 +13,7 @@ services:
             - ./dags:/opt/airflow/dags
             - ./dbt:/opt/airflow/dbt
             - ./logs:/opt/airflow/logs
+            - ./great_expectations:/opt/airflow/great_expectations
         environment:
             AIRFLOW__CORE__EXECUTOR: LocalExecutor
             _AIRFLOW_WWW_USER_CREATE: 'true'
@@ -25,7 +26,8 @@ services:
             AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "True"
             AIRFLOW__CORE__PARALLELISM: 5
             AIRFLOW__WEBSERVER__WORKERS: 1
-            AIRFLOW__SCHEDULER__MAX_THREADS: 4
+            AIRFLOW__SCHEDULER__MAX_THREADS: 5
+            AIRFLOW__CORE__ENABLE_XCOM_PICKLING: "True"
         command: webserver
         healthcheck:
             test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
@@ -44,6 +46,7 @@ services:
             - ./dags:/opt/airflow/dags
             - ./dbt:/opt/airflow/dbt
             - ./logs:/opt/airflow/logs
+            - ./great_expectations:/opt/airflow/great_expectations
         environment:
             AIRFLOW__CORE__EXECUTOR: LocalExecutor
             _AIRFLOW_WWW_USER_CREATE: 'true'
@@ -56,6 +59,7 @@ services:
             AIRFLOW__CORE__PARALLELISM: 5
             AIRFLOW__WEBSERVER__WORKERS: 1
             AIRFLOW__SCHEDULER__MAX_THREADS: 4
+            AIRFLOW__CORE__ENABLE_XCOM_PICKLING: "True"
         command: scheduler
         restart: always
 
