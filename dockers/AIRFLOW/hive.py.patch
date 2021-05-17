@@ -1,0 +1,38 @@
+--- /home/airflow/.local/lib/python3.6/site-packages/databricks_dbapi/hive.py	2021-05-17 19:50:15.000000000 +0000
++++ /home/airflow/.local/lib/python3.6/site-packages/databricks_dbapi/hive.py	2021-05-17 19:46:36.000000000 +0000
+@@ -4,7 +4,6 @@
+ 
+ from pyhive import hive
+ from pyhive.exc import *  # Make all exceptions visible in this module per PEP 249
+-from thrift.transport import THttpClient
+ 
+ PY_MAJOR = sys.version_info[0]
+ 
+@@ -37,25 +36,5 @@
+     :param str password: the corresponding Databricks user's password.
+     :param dict kwargs: keyword arguments passed to ``hive.connect``
+     """
+-    if token is not None:
+-        auth = "token:%s" % token
+-    elif user is not None and password is not None:
+-        auth = "%s:%s" % (user, password)
+-    else:
+-        raise ValueError("Missing arguments. Must provide either token or user/password.")
+-
+-    # https://kb.databricks.com/python/python-2-eol.html
+-    if PY_MAJOR < 3:
+-        auth = base64.standard_b64encode(auth)
+-    else:
+-        auth = base64.standard_b64encode(auth.encode()).decode()
+-
+-    if http_path is not None:
+-        url = "https://%s:%s/%s" % (host, port, http_path)
+-    else:
+-        raise ValueError("Missing arguments. Must provide either cluster or http_path.")
+-
+-    transport = THttpClient.THttpClient(url)
+-    transport.setCustomHeaders({"Authorization": "Basic %s" % auth})
+-
+-    return hive.connect(database=database, thrift_transport=transport, **kwargs)
++   
++    return hive.connect(host, username=None, password=None, auth=None)
