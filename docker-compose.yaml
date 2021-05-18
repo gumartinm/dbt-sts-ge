@@ -54,7 +54,6 @@ services:
             _AIRFLOW_WWW_USER_PASSWORD: 'airflow'
             AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:yey123456@postgres/airflow_db
             FERNET_KEY: NXtEyKwp633TUtAgdyoEonj9ufHRI7I33s3wjw3q0yU=
-            AIRFLOW_RUN_INITSCRIPTS: "True"
             AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "True"
             AIRFLOW__CORE__PARALLELISM: 5
             AIRFLOW__WEBSERVER__WORKERS: 1
