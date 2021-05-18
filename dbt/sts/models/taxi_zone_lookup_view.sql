@@ -2,4 +2,5 @@
     materialized='view'
 ) }}
 
-SELECT * FROM example.taxi_zone_lookup
+select *
+from {{ source('source', 'taxi_zone_lookup') }}
