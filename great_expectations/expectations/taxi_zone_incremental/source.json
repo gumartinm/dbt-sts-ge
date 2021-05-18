@@ -1,0 +1,43 @@
+{
+  "data_asset_type": "Dataset",
+  "expectation_suite_name": "taxi_zone_incremental.source",
+  "expectations": [
+    {
+      "expectation_type": "expect_table_columns_to_match_ordered_list",
+      "kwargs": {
+        "column_list": [
+          "borough",
+          "zone",
+          "service_zone",
+          "locationid"
+        ]
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_table_row_count_to_be_between",
+      "kwargs": {
+        "max_value": 265,
+        "min_value": 265
+      },
+      "meta": {}
+    }
+  ],
+  "meta": {
+    "columns": {
+      "borough": {
+        "description": ""
+      },
+      "locationid": {
+        "description": ""
+      },
+      "service_zone": {
+        "description": ""
+      },
+      "zone": {
+        "description": ""
+      }
+    },
+    "great_expectations_version": "0.13.19"
+  }
+}

@@ -65,6 +65,20 @@ dbt_run = DbtRunOperator(
     dag=dag
 )
 
+
+validate_transform = GreatExpectationsOperator(
+    task_id='validate_transform',
+    expectation_suite_name='taxi_zone_incremental.source',
+    batch_kwargs={
+        'datasource': 'spark-thrift-server',
+        'schema': 'example',
+        'table': 'taxi_zone_incremental',
+        'data_asset_name': 'taxi_zone_incremental'
+    },
+    data_context_root_dir=GE_ROOT_DIR,
+    dag=dag
+)
+
 ge_docs_generate = BashOperator(
     task_id='ge_docs_generate',
     bash_command=f'great_expectations docs build --directory {GE_ROOT_DIR} --assume-yes',
@@ -72,4 +86,4 @@ ge_docs_generate = BashOperator(
 )
 
 
-dbt_seed >> validate_load >> ge_docs_generate >> dbt_run
+dbt_seed >> validate_load >> dbt_run >> validate_transform >> ge_docs_generate
