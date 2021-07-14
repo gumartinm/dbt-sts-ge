@@ -1,0 +1,3 @@
+dbt-spark[PyHive]==0.20.0
+dbt==0.20.0
+pyhive[hive]==0.6.3
