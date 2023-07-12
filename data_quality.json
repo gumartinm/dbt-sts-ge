@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Great Expectations",
+    "ring": "trial",
+    "quadrant": "tools",
+    "isNew": "FALSE",
+    "description": "Great Expectations (GX) helps data teams build a shared understanding of their data through quality testing, documentation, and profiling."
+  },
+  {
+    "name": "Deequ",
+    "ring": "trial",
+    "quadrant": "tools",
+    "isNew": "FALSE",
+    "description": "Deequ is a library built on top of Apache Spark for defining unit tests for data, which measure data quality in large datasets. We are happy to receive feedback and contributions."
+  },
+  {
+    "name": "PyDeequ",
+    "ring": "trial",
+    "quadrant": "tools",
+    "isNew": "FALSE",
+    "description": "PyDeequ is a Python API for Deequ, a library built on top of Apache Spark for defining unit tests for data, which measure data quality in large datasets. PyDeequ is written to support usage of Deequ in Python."
+  },
+  {
+    "name": "DQC",
+    "ring": "hold",
+    "quadrant": "tools",
+    "isNew": "FALSE",
+    "description": "test"
+  },
+  {
+    "name": "Soda Core",
+    "ring": "assess",
+    "quadrant": "tools",
+    "isNew": "FALSE",
+    "description": "An open-source data quality and observability tool."
+  },
+  {
+    "name": "dbt-unit-testing",
+    "ring": "trial",
+    "quadrant": "languages & frameworks",
+    "isNew": "FALSE",
+    "description": "A dbt package that allows writing unit tests for a model and its logic by mocking its dependencies. This brings the engineering rigor of fast development feedback to the data ecosystem. Our teams use this package with Snowflake to practice test-driven development (TDD), although it was only feasible for simple transformations."
+  },
+  {
+    "name": "dbt-expectations",
+    "ring": "trial",
+    "quadrant": "languages & frameworks",
+    "isNew": "FALSE",
+    "description": "An extension package for dbt inspired by Great Expectations. Data quality is an important tenet of data governance, so when it comes to automated data governance, it's important to craft built-in controls that flag anomalies or quality issues in data pipelines."
+  },
+  {
+    "name": "pandera",
+    "ring": "assess",
+    "quadrant": "languages & frameworks",
+    "isNew": "FALSE",
+    "description": "A Python library for testing and validating data across a wide range of frame types such as pandas, Dask or PySpark."
+  }
+]
